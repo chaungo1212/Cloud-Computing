@@ -1,11 +1,16 @@
 import sys
 import logging
 
+
 command_inputFile = "CLI.txt"
 with open(command_inputFile) as c:
     content = c.read().splitlines()
     
 logging.basicConfig(filename='aggiestack-log.txt ', level=logging.INFO, format='%(asctime)s %(name)s %(message)s', filemode='w')
+
+table_hardware = {}
+table_img = {}
+table_flavor = {}
 
 for command in content:
     #print(command)
@@ -19,12 +24,15 @@ for command in content:
     l1 = ''.join([a1, ' ', a2])
     #logger1 = logging.getLogger(str(c))
     if l1 == 'aggiestack config':
-  
         if a3 == '--hardware':
             sys.stdout.write('hardware\n')
             filename  = 'hdwr-config.txt'
             with open(filename) as f:
-                content = f.readlines();
+                content = f.read().splitlines()
+                for i in range(1, len(content)): # Skip the first line since the first line record the amount except for the data.
+                    #print(content[i])
+                    data = content[i].split(' ')
+                    table_hardware[data[0]] =[data[1], data[2], data[3], data[4]] 
             #logger1.info('Successful')
             logging.info(str(c) + ' Successful')
             #logging.basicConfig(filename='aggiestack-log.txt ', level=logging.INFO)
@@ -66,3 +74,4 @@ for command in content:
     else:
         sys.stderr.write("Error: Cannot find the command\n")
         logging.info(str(c) + ' Failure')
+print(table_hardware['m2'])

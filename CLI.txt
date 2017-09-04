@@ -1,0 +1,7 @@
+aggiestack config --hardware hdwr-config.txt
+aggiestack config --images image-config.txt
+aggiestack config --flavors flavor-config.txt
+aggiestack show hardware
+aggiestack show images
+aggiestack show flavors 
+aggiestack show all

@@ -1,7 +1,17 @@
 import sys
 import logging
-    
-#image data check again pls!!!!!!!!!!!!!!!!!!!!!!
+
+def printDict(dict):
+    sys.stdout.write('----------------------------------\n')
+    sys.stdout.write("#" + str(len(dict)) + "\n")
+    for key in dict:
+        sys.stdout.write(key + ' ')
+        list = dict[key]
+        for i in range(len(list)):
+            sys.stdout.write(str(list[i] + " "))
+        sys.stdout.write("\n")
+    sys.stdout.write('----------------------------------\n')
+            
 command_inputFile = "CLI.txt"
 with open(command_inputFile) as c:
     content = c.read().splitlines()
@@ -22,67 +32,71 @@ for command in content:
     
     if a1 == 'aggiestack':
         l1 = ''.join([a1, ' ', a2])
-        #logger1 = logging.getLogger(str(c))
+        ##aggiestack config
         if l1 == 'aggiestack config':
             if a3 == '--hardware':
-                sys.stdout.write('hardware\n')
                 filename  = 'hdwr-config.txt'
                 with open(filename) as f:
                     content = f.read().splitlines()
                     for i in range(1, len(content)): # Skip the first line since the first line record the amount except for the data.
-                    #print(content[i])
                         data = content[i].split(' ')
-                        table_hardware[data[0]] =[data[1], data[2], data[3], data[4]] 
-                        #logger1.info('Successful')
+                        table_hardware[data[0]] =[data[1], data[2], data[3], data[4]] # make a table for hardware
                         current_hardware = table_hardware
-                    logging.info(str(c) + ' Successful')
-                        #logging.basicConfig(filename='aggiestack-log.txt ', level=logging.INFO)
-                        #logging.info("Successful")
-                        #logging.info("aggiestack config --hardware hdwr-config.txt")
+                    logging.info(str(c) + ' Successful') 
+
             elif a3 == '--images':
-                sys.stdout.write('image\n')
                 filename  = "image-config.txt"  
                 with open(filename) as f:
                     content = f.read().splitlines()
                     for i in range(1, len(content)): # Skip the first line since the first line record the amount except for the data.
-                    #print(content[i])
                         data = content[i].split(' ')
-                        table_img[data[0]] =data[1] 
+                        table_img[data[0]] = [data[1]] 
                 logging.info(str(c) + ' Successful')
+                
             elif a3 == '--flavors':
-                sys.stdout.write('flavor\n')
                 filename  = "flavor-config.txt"  
                 with open(filename) as f:
                     content = f.read().splitlines()
                     for i in range(1, len(content)): # Skip the first line since the first line record the amount except for the data.
-                    #print(content[i])
-                        data = content[i].split(' ')
+                        data = content[i].split(' ') 
                         table_flavor[data[0]] =[data[1], data[2], data[3]] 
-                logging.info(str(c) + ' Successful')                    
+                logging.info(str(c) + ' Successful') 
+                                   
             else:
-                sys.stderr.write("Error: Cannot find the command\n")
+                sys.stderr.write("Error: File does not exist\n")
                 logging.info(str(c) + " Failure")
- 
+        ## aggiestack show
         elif l1 == 'aggiestack show':
             if a3 == 'hardware':
-                sys.stdout.write('show hardware\n')
+                print("> Show hardware: ")
+                printDict(table_hardware)
                 logging.info(str(c) + ' Successful')
             elif a3 == 'images':
-                sys.stdout.write('show images\n')
+                print('> Show images: ')
+                printDict(table_img)
                 logging.info(str(c) + ' Successful')
             elif a3 == 'flavors':
-                sys.stdout.write('show flavors\n')
+                print('> Show flavors: ')
+                printDict(table_flavor)
                 logging.info(str(c) + ' Successful')
             elif a3 == 'all':
-                sys.stdout.write('show all\n')
+                print('> Show all: ')
+                print('--Hardware: ')
+                printDict(table_hardware)
+                print('--Image: ')
+                printDict(table_img)
+                print('--Flavor: ')
+                printDict(table_flavor)
                 logging.info(str(c) + ' Successful')
             else:
-                sys.stderr.write("Error: Cannot find the command\n")
+                sys.stderr.write("Error: File does not exist\n")
                 logging.info(str(c) + " Failure")
+        ## aggiestack admin
         elif l1 == 'aggiestack admin':
-            #print("Debug "+a3)
             if a3 == 'show':
-                print('admin')
+                print('> Admin show hardware')
+                printDict(current_hardware)
+                logging.info(str(c) + ' Succesful ')
             elif a3 == 'can_host':
                 a4 = c[3] # machine name
                 a5 = c[4] # flavor name
@@ -100,14 +114,16 @@ for command in content:
                 flav_nvcpus = int(table_flavor[a5][2])
                 if avail_mem >= flav_mem and avail_ndisks >= flav_ndisks and avail_nvcpus >= flav_nvcpus:
                     logging.info(str(c) + "Success")
-                    sys.stdout.write("Yes\n")
+                    sys.stdout.write(str(a4) + " can host " + str(a5) + "?: Yes\n")
+                    print('----------------------------------')
                 else:
                     logging.info(str(c) + "Failure")
                     sys.stderr.write("Error: " + a4 + " can not host " + a5 + " flavor\n") 
+                    
         else:
-            sys.stderr.write("Error: Cannot find the command\n")
+            sys.stderr.write("Error\n")
             logging.info(str(c) + ' Failure')
             
     else: 
-        sys.stderr.write("Error: Cannot find the command\n")
+        sys.stderr.write("Error: File does not exist. (Command begin with aggiestack)\n")
         logging.info(str(c) + ' Failure')

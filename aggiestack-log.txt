@@ -1,0 +1,2 @@
+2017-12-01 20:09:19,322 root ['aggiestack', 'server', 'create', '--image', 'linux-ubuntu', '--flavor', 'small', 'my-first-instance']Failure
+2017-12-01 20:09:19,325 root ['aggiestack', 'server', 'create', '--image', 'linux-ubuntu', '--flavor', 'medium', 'my-second-instance']Failure

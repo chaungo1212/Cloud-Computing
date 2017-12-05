@@ -199,6 +199,7 @@ for command in content:
 									break
 						if can_move == False:
 							sys.stdout.write(instancename + ": Can not find any rack or hardware to allocate.\n")
+				table_rack[a4][0] = "-1" # Mean the rack is not health
 			elif a3 == 'remove':
 				print ('>Admin remove MACHINE:')
 			elif a3 == 'add':

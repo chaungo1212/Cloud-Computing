@@ -1,6 +1,6 @@
 import sys
 import logging
-
+prototype_rack = {}
 table_hardware = {}
 table_rack = {}
 table_img = {}
@@ -56,6 +56,7 @@ for command in content:
 					for i in range(1,3):
 						data = content[i].split(' ')
 						table_rack[data[0]]= [data[1]] # make table for rack
+						prototype_rack[data[0]]=[data[1]]
 					for i in range(4, len(content)): # Skip the first line since the first line record the amount except for the data.
 						data = content[i].split(' ')
 						table_hardware[data[0]] =[data[1], data[2], data[3], data[4],data[5]] # make a table for hardware
@@ -101,7 +102,7 @@ for command in content:
 						imgSize = int(table_img[a5][0]) # Update corresponding rack's capacity.
 						remain_capacity = int(table_rack[table_hardware[Result][0]][0])
 						remain_capacity = remain_capacity - imgSize
-						table_rack[table_hardware[Result][1]] = str(remain_capacity)
+						table_rack[table_hardware[Result][0]][0]=str(remain_capacity)
 						remain_mem = int(table_hardware[Result][2]) # Upate the machine's info. # available mem
 						remain_ndisks = int(table_hardware[Result][3]) # available num-disks
 						remain_nvcpus = int(table_hardware[Result][4]) # available num-vcpus
@@ -184,6 +185,9 @@ for command in content:
 					if table_hardware[hardwarename][0] == a4: # The instance need to move to other rack.
 						image = table_instance[instancename][0]
 						flavor = table_instance[instancename][1]
+						table_hardware[hardwarename][2] = str(int(table_hardware[hardwarename][2]) + int(table_flavor[flavor][0]))
+						table_hardware[hardwarename][3] = str(int(table_hardware[hardwarename][3]) + int(table_flavor[flavor][1]))
+						table_hardware[hardwarename][4] = str(int(table_hardware[hardwarename][4]) + int(table_flavor[flavor][2]))
 						can_move = False
 						for desthardware in table_hardware:
 							if table_hardware[desthardware][0]!= a4:
@@ -219,14 +223,37 @@ for command in content:
 									table_hardware[Result][3] = str(int(table_hardware[Result][3]) - int(table_flavor[flavor][1]))
 									table_hardware[Result][4] = str(int(table_hardware[Result][4]) - int(table_flavor[flavor][2]))
 									can_move = True
-									sys.stdout.write(instancename + ": Move to hardware-" + Result + " on rack-" + table_hardware[Result][0] + ".\n")
+									sys.stdout.write(instancename + ": Move to (" + Result + " " + table_hardware[Result][0] + ") from (" + hardware + " " +table_hardware[hardwarename][0]+ ").\n")
 									break
 						if can_move == False:
 							del table_instance[instancename]
 							sys.stdout.write(instancename + ": Can not find any rack or hardware to allocate.\n")
 				del table_hardware[a4]
 			elif a3 == 'add':
-				print('>Admin add:')
+				a5 = c[4]
+				a6 = c[5]
+				a7 = c[6]
+				a8 = c[7]
+				a9 = c[8]
+				a10 = c[9]
+				a12 = c[11]
+				a13 = c[12]
+				a14 = c[13]
+				print('>Admin add:' + a4 + ' '+ a5 + ' '+ a6 + ' '+ a7 + ' '+ a8 + ' '+ a9 + ' '+ a10 + ' ')
+				if a4 =='-mem' and a6 == '-disk' and a8 == '-vcpus' and a10 == '-ip' and a12 == '-rack':
+					MEM = str(a5)
+					NUM_DISKS = str(a7)
+					VCPUs = str(a9)
+					IP = c[10]
+					RACK_NAME = str(a13)
+					MACHINE = str(a14)
+					if RACK_NAME in table_rack:
+						table_hardware[a14] = [RACK_NAME, IP, MEM, NUM_DISKS, VCPUs] # Add new machine
+						table_rack[RACK_NAME][0] = prototype_rack[RACK_NAME][0] 
+					else:
+						print('There is no rack- '+ RACK_NAME + ' , so can not add new machine')
+				else: 
+					print('>Command is Wrong')
 			else:
 				sys.stderr.write("Error: File does not exist\n")
 		 ## aggiestack show

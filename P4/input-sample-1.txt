@@ -4,9 +4,17 @@ aggiestack config --images image-config.txt
 aggiestack show images
 aggiestack config --flavors flavor-config.txt
 aggiestack show flavors
+aggiestack show hardware
 aggiestack server create --image linux-ubuntu --flavor small my-first-instance
 aggiestack server create --image linux-ubuntu --flavor medium my-second-instance
 aggiestack admin show instances
-aggiestack admin evacuate r1
-aggiestack admin add —mem 8 —disk 4 —vcpus 4 -ip 128.0.0.1 -rack r1 newmachine 
+aggiestack admin show hardware
+aggiestack admin evacuate r2
+aggiestack admin show hardware
+aggiestack admin show instances
+aggiestack admin remove calvin
+aggiestack show hardware
+aggiestack admin show instances
+aggiestack admin add -mem 8 -disk 4 -vcpus 4 -ip 128.0.0.1 -rack r1 newmachine
+aggiestack show hardware 
 aggiestack admin show instances

@@ -1,5 +1,0 @@
-2017-12-04 20:49:57,540 root ['aggiestack', 'config', '--hardware', 'hdwr-config.txt'] Successful
-2017-12-04 20:49:57,540 root ['aggiestack', 'config', '--images', 'image-config.txt'] Successful
-2017-12-04 20:49:57,555 root ['aggiestack', 'config', '--flavors', 'flavor-config.txt'] Successful
-2017-12-04 20:49:57,572 root ['aggiestack', 'admin', 'show', 'instances'] Successful
-2017-12-04 20:49:57,572 root ['aggiestack', 'admin', 'show', 'instances'] Successful

@@ -184,6 +184,9 @@ for command in content:
 					if table_hardware[hardwarename][0] == a4: # The instance need to move to other rack.
 						image = table_instance[instancename][0]
 						flavor = table_instance[instancename][1]
+						table_hardware[hardwarename][2] = str(int(table_hardware[hardwarename][2]) - int(table_flavor[flavor][0]))
+						table_hardware[hardwarename][3] = str(int(table_hardware[hardwarename][3]) - int(table_flavor[flavor][1]))
+						table_hardware[hardwarename][4] = str(int(table_hardware[hardwarename][4]) - int(table_flavor[flavor][2]))
 						can_move = False
 						for desthardware in table_hardware:
 							if table_hardware[desthardware][0]!= a4:
@@ -198,6 +201,7 @@ for command in content:
 									sys.stdout.write(instancename + ": Move to hardware-" + Result + " on rack-" + table_hardware[Result][0] + ".\n")
 									break
 						if can_move == False:
+							del table_instance[instancename]
 							sys.stdout.write(instancename + ": Can not find any rack or hardware to allocate.\n")
 				table_rack[a4][0] = "-1" # Mean the rack is not health
 			elif a3 == 'remove':

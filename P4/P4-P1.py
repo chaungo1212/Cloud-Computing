@@ -118,7 +118,7 @@ for command in content:
 						print('> Hardware name:' + Result)
 						print('>Successfully create instance name')
 						break
-					#logging.info(str(c) + ' Successful') 	
+						logging.info(str(c) + ' Successful') 	
 				else:
 					print('>Failed to create instance name')
 			elif a3 == 'delete':
@@ -160,6 +160,7 @@ for command in content:
 				logging.info(str(c) + ' Successful') 
 			else:
 				sys.stderr.write("Error: File does not exist\n")
+				logging.info(str(c) + 'Failed') 
 		##aggiestack admin
 		elif l1 == 'aggiestack admin':
 			a4 = c[3]
@@ -201,8 +202,10 @@ for command in content:
 									can_move = True
 									sys.stdout.write(instancename + ": Move to hardware-" + Result + " on rack-" + table_hardware[Result][0] + ".\n")
 									break
+									logging.info(str(c) + ' Successful') 
 						if can_move == False:
 							sys.stdout.write(instancename + ": Can not find any rack or hardware to allocate.\n")
+							logging.info(str(c) + ' Failed') 
 				table_rack[a4][0] = "-1" # Mean the rack is not health
 			elif a3 == 'remove':
 				print ('>Admin remove MACHINE:' + a4)
@@ -225,9 +228,11 @@ for command in content:
 									can_move = True
 									sys.stdout.write(instancename + ": Move to (" + Result + " " + table_hardware[Result][0] + ") from (" + hardware + " " +table_hardware[hardwarename][0]+ ").\n")
 									break
+									logging.info(str(c) + ' Successful') 
 						if can_move == False:
 							del table_instance[instancename]
 							sys.stdout.write(instancename + ": Can not find any rack or hardware to allocate.\n")
+							logging.info(str(c) + ' Failed') 
 				del table_hardware[a4]
 			elif a3 == 'add':
 				a5 = c[4]
@@ -250,27 +255,36 @@ for command in content:
 					if RACK_NAME in table_rack:
 						table_hardware[a14] = [RACK_NAME, IP, MEM, NUM_DISKS, VCPUs] # Add new machine
 						table_rack[RACK_NAME][0] = prototype_rack[RACK_NAME][0] 
+						logging.info(str(c) + ' Successful') 
 					else:
 						print('There is no rack- '+ RACK_NAME + ' , so can not add new machine')
+						logging.info(str(c) + ' Failed') 
 				else: 
 					print('>Command is Wrong')
+					logging.info(str(c) + ' FAiled') 
 			else:
 				sys.stderr.write("Error: File does not exist\n")
+				logging.info(str(c) + ' Failed') 
 		 ## aggiestack show
 		elif l1 == 'aggiestack show':
 			if a3 == 'hardware':
 				print('> Show hardware: ')
 				printDict(table_rack)
 				printDict(table_hardware)
+				logging.info(str(c) + ' Successful') 
 			elif a3 == 'images':
 				print('> Show images: ')
 				printDict(table_img)
+				logging.info(str(c) + ' Successful') 
 			elif a3 == 'flavors':
 				print('> Show flavors: ')
 				printDict(table_flavor)
+				logging.info(str(c) + ' Successful') 
 			else:
-				sys.stderr.write("Error: File does not exist\n")		
+				sys.stderr.write("Error: File does not exist\n")
+				logging.info(str(c) + ' Failed') 		
 		else:
 			sys.stderr.write("Error: File does not exist\n")
+			logging.info(str(c) + ' Failed') 
     else: 
         sys.stderr.write("Error: File does not exist. (Command begin with aggiestack)\n")

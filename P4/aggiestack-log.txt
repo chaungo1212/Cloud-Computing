@@ -1,7 +1,14 @@
-2017-12-04 22:45:18,670 root ['aggiestack', 'config', '--hardware', 'hdwr-config.txt'] Successful
-2017-12-04 22:45:18,686 root ['aggiestack', 'config', '--images', 'image-config.txt'] Successful
-2017-12-04 22:45:18,686 root ['aggiestack', 'config', '--flavors', 'flavor-config.txt'] Successful
-2017-12-04 22:45:18,717 root ['aggiestack', 'admin', 'show', 'instances'] Successful
-2017-12-04 22:45:18,763 root ['aggiestack', 'admin', 'show', 'instances'] Successful
-2017-12-04 22:45:18,788 root ['aggiestack', 'admin', 'show', 'instances'] Successful
-2017-12-04 22:45:18,813 root ['aggiestack', 'admin', 'show', 'instances'] Successful
+2017-12-04 23:00:25,701 root ['aggiestack', 'config', '--hardware', 'hdwr-config.txt'] Successful
+2017-12-04 23:00:25,701 root ['aggiestack', 'show', 'hardware'] Successful
+2017-12-04 23:00:25,717 root ['aggiestack', 'config', '--images', 'image-config.txt'] Successful
+2017-12-04 23:00:25,717 root ['aggiestack', 'show', 'images'] Successful
+2017-12-04 23:00:25,717 root ['aggiestack', 'config', '--flavors', 'flavor-config.txt'] Successful
+2017-12-04 23:00:25,717 root ['aggiestack', 'show', 'flavors'] Successful
+2017-12-04 23:00:25,736 root ['aggiestack', 'show', 'hardware'] Successful
+2017-12-04 23:00:25,752 root ['aggiestack', 'admin', 'show', 'instances'] Successful
+2017-12-04 23:00:25,793 root ['aggiestack', 'admin', 'show', 'instances'] Successful
+2017-12-04 23:00:25,809 root ['aggiestack', 'show', 'hardware'] Successful
+2017-12-04 23:00:25,809 root ['aggiestack', 'admin', 'show', 'instances'] Successful
+2017-12-04 23:00:25,809 root ['aggiestack', 'admin', 'add', '-mem', '8', '-disk', '4', '-vcpus', '4', '-ip', '128.0.0.1', '-rack', 'r1', 'newmachine'] Successful
+2017-12-04 23:00:25,825 root ['aggiestack', 'show', 'hardware', ''] Successful
+2017-12-04 23:00:25,825 root ['aggiestack', 'admin', 'show', 'instances'] Successful
